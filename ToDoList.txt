@@ -1,0 +1,34 @@
+-Personnage jouable
+	-Deplacement
+		-marche
+		-course
+		-dash
+		-saut
+		-accrouppissement
+		-interaction avec obstacles
+			-pentes
+			-murs
+			-toits
+			-trous
+	-Vue
+		-regard
+		-position des visuels dans le regard
+		-UI
+	-Combat
+		-creations de differentes armes
+		-interaction avec les enemis
+		-interaction avec les murs
+		-creations de competences
+
+
+-Enemis
+	-Deplacement
+		-similaire au personnage mais controlle par IA
+		-IA
+	-Combat
+		-creations de differentes armes
+		-interaction avec le personnage jouable
+		-interaction avec les autres enemis
+		-interaction avec les murs
+		-creations de competences
+		
