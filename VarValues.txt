@@ -1,0 +1,3 @@
+PlayerCharacter --> CharacterMovement.cs
+	Jump Force = 5; // hauteur du saut
+	Jum
