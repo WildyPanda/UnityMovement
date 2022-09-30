@@ -57,6 +57,25 @@ public class CharacterMovement : MonoBehaviour
     // le multiplicateur de vitesse de la course
     [SerializeField]
     private float runSpeed;
+    // la vitesse du dash
+    [SerializeField]
+    private float dashSpeed;
+    // le delai entre deux sprint pour effectuer un dash ( en ticks ( 60 / s ) )
+    [SerializeField]
+    private int dashDelay;
+    // le delai actuel entre deux sprint
+    [SerializeField]
+    private int dashDelayAct = 0;
+    // le delai minimum entre deux dash ( en ticks ( 60 / s ) )
+    [SerializeField]
+    private int dashCooldown;
+    // le temps actuel passe apres un dash ( en ticks ( 60 / s ) )
+    [SerializeField]
+    private int dashCooldownAct;
+
+
+
+
     // le multiplicateur de vitesse de l'accroupissement
     [SerializeField]
     private float crouchSpeed;
@@ -165,7 +184,7 @@ public class CharacterMovement : MonoBehaviour
         Vector3 rightMove = transform.right * Input.GetAxis("Horizontal");
         Vector3 newWalk = (forwardMove + rightMove).normalized * walkSpeed * walkAcceleration;
 
-        // ajoute le multiplicateur de course si la course est enclenché
+        // ajoute le multiplicateur de course si la course est enclenché / accroupissement
         if (Input.GetButton("Crouch"))
         {
             newWalk *= crouchSpeed;
@@ -174,6 +193,18 @@ public class CharacterMovement : MonoBehaviour
         {
             newWalk *= runSpeed;
         }
+
+        if (Input.GetButtonDown("Sprint"))
+        {
+            if (dashDelayAct < dashDelay && dashCooldownAct > dashCooldown)
+            {
+                newWalk += newWalk.normalized * dashSpeed;
+                dashCooldownAct = 0;
+            }
+            dashDelayAct = 0;
+        }
+        dashDelayAct += 1;
+        dashCooldownAct += 1;
 
         if (Input.GetButtonUp("Crouch")){
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * (1 / crouchHeight), transform.localScale.z);

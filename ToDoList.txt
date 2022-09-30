@@ -1,17 +1,17 @@
 -Personnage jouable
 	-Deplacement
-		-marche
-		-course
-		-dash
-		-saut
-		-accrouppissement
-		-interaction avec obstacles
-			-pentes
-			-murs
-			-toits
-			-trous
+		-marche //
+		-course //
+		-dash //
+		-saut //
+		-accrouppissement //
+		-interaction avec obstacles //
+			-pentes // revoir les descentes
+			-murs //
+			-toits // 
+			-trous // 
 	-Vue
-		-regard
+		-regard //
 		-position des visuels dans le regard
 		-UI
 	-Combat
