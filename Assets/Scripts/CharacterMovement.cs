@@ -13,6 +13,10 @@ public class CharacterMovement : MonoBehaviour
     // la velocite du personnage
     [SerializeField]
     private Camera cam;
+    // collider positionnne au niveau de la tete
+    [SerializeField]
+    private Collider headCollider;
+
 
     // true si la gravite s'applique
     [SerializeField]
@@ -80,6 +84,7 @@ public class CharacterMovement : MonoBehaviour
         // initialise le CharacterController
         CC = this.GetComponent<CharacterController>();
         cam = this.GetComponentInChildren<Camera>();
+        headCollider = transform.GetChild(1).GetChild(0).GetComponent<SphereCollider>();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -207,6 +212,14 @@ public class CharacterMovement : MonoBehaviour
     {
         CC.Move(velocity * Time.deltaTime);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other);
+    }
+
+    
+
     // Mouvement
 
     // Regard
