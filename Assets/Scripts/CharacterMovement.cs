@@ -13,9 +13,6 @@ public class CharacterMovement : MonoBehaviour
     // la velocite du personnage
     [SerializeField]
     private Camera cam;
-    // collider positionnne au niveau de la tete
-    [SerializeField]
-    private Collider headCollider;
 
 
     // true si la gravite s'applique
@@ -66,6 +63,15 @@ public class CharacterMovement : MonoBehaviour
     // le modificateur de taille en accroupi 1 pas de changement 0.5 taille divise par deux
     [SerializeField]
     private float crouchHeight;
+    // la position du centre de la tete positionnne au niveau de la tete
+    [SerializeField]
+    private Transform headColliderCenter;
+    // la position du centre de la tete positionnne au niveau de la tete
+    [SerializeField]
+    private float headColliderRadius;
+    // true si la tete a touche a la derniere frame
+    [SerializeField]
+    private bool doesHeadHit;
     // sensibilite au vecteur X du regard
     [SerializeField]
     private float lookSpeedX;
@@ -84,7 +90,7 @@ public class CharacterMovement : MonoBehaviour
         // initialise le CharacterController
         CC = this.GetComponent<CharacterController>();
         cam = this.GetComponentInChildren<Camera>();
-        headCollider = transform.GetChild(1).GetChild(0).GetComponent<SphereCollider>();
+        headColliderCenter = transform.GetChild(1).GetChild(0).GetComponent<Transform>();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -107,6 +113,12 @@ public class CharacterMovement : MonoBehaviour
         {
             velocity.y = 0;
             jumpLeft = baseJumpLeft;
+            doesHeadHit = false;
+        }
+
+        if (doesHeadHit && velocity.y > 0)
+        {
+            velocity.y = 0;
         }
 
         // applique la gravite a la velocite si elle doit s'appliquer
@@ -213,12 +225,18 @@ public class CharacterMovement : MonoBehaviour
         CC.Move(velocity * Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Debug.Log(other);
+        if(hit.collider.GetType() != typeof(TerrainCollider))
+        {
+            if ((hit.point - headColliderCenter.position).magnitude <= headColliderRadius && !doesHeadHit)
+            {
+                doesHeadHit = true;
+            }
+        }
     }
 
-    
+
 
     // Mouvement
 
