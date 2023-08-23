@@ -100,7 +100,7 @@ public class CharacterMovement : MonoBehaviour
 
 
 
-
+    Projectile pro;
 
 
 
@@ -111,6 +111,10 @@ public class CharacterMovement : MonoBehaviour
         cam = this.GetComponentInChildren<Camera>();
         headColliderCenter = transform.GetChild(1).GetChild(0).GetComponent<Transform>();
         Cursor.lockState = CursorLockMode.Locked;
+
+        pro = new Projectile();
+        pro.test();
+
     }
 
     void Update()
@@ -120,7 +124,10 @@ public class CharacterMovement : MonoBehaviour
 
         // applique le regard au CC
         ApplyLook();
+
+        pro.test();
     }
+
 
     // Mouvement
     void Movement()
